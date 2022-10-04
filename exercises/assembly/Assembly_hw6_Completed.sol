@@ -54,3 +54,26 @@ This code It creates a contract twice (with diff addr each time),
 then stops execution and marks it for deletion (which happens at the
 end of this transaction). Sends wei owned by account address to 0 address
 */
+
+//Q3
+
+contract ERC20 {
+        // receives acc address and returns storage offset offset by adding 0x1000 (4096) to it 
+        function accountToStorageOffset(account) -> offset {
+                offset := add(0x1000, account)
+            }
+// accepts account address and spender address as arg, returns offset
+       function allowanceStorageOffset(account, spender) -> offset {
+           // fetch the account to storage offset for this account
+                offset := accountToStorageOffset(account)
+                // store this offset starting at 0x00 in memory
+                mstore(0, offset)
+                // store the spender address starting at 0x20 in memory
+                mstore(0x20, spender)
+                // calculate the allowance storage offset by hashing the items in memory from 0x00 to 0x40
+                // 0x00 to 0x19 is the accToStorage offset, 0x20 to 0x39 is the spender address
+                // So, the accToStorage offset and spender address are hashed togeother to get the allowanceStorage offset
+                // This is the place where the allowance value (in wei) will be stored for this allower and spender.
+                offset := keccak256(0, 0x40)
+            }
+}
