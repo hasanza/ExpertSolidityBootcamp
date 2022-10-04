@@ -48,3 +48,9 @@ create // creates a new contract, i.e., an account with associated code
 pop //Pops off the address off the stack [0,17,27]
 create   // creates again, new addr is: 0x3fa89944e11022fc67d12a9d2bf35ebe1164f7ef                   
 selfdestruct // stops execution and marks account (created in the previous step) for later deletion
+
+/*
+This code It creates a contract twice (with diff addr each time), 
+then stops execution and marks it for deletion (which happens at the
+end of this transaction). Sends wei owned by account address to 0 address
+*/
